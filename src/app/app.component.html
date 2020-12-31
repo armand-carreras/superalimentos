@@ -1,0 +1,34 @@
+
+<header>
+    <mat-label>Search: </mat-label>
+    <input  mat-input [(ngModel)]="searchFood" placeholder="Search your food">
+  <button class='margins' mat-raised-button color="primary" (click)='formVisible()'>{{buttonAdd}}</button>
+</header>
+<form #formulario = 'ngForm' [hidden]='hideAddFood' (ngSubmit) = dataHandle(nombre.value,calories.value)>
+  <h3>Add new Food</h3>
+  <mat-form-field>
+    <mat-label for="productName">Nombre:</mat-label>
+    <input matInput name="productName" placeholder="Introduce nombre" required minlength=4 #nombre>
+    <mat-error *ngIf="nombre.invalid">
+      <mat-error *ngIf="nombre.dirty || nombre.touched"><span>Error</span></mat-error>
+   </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label for="productCalories">Calorias:</mat-label>
+    <input matInput name="productCalories" placeholder="Introduce Calorias" required #calories>
+  </mat-form-field>
+  <button mat-icon-button color="primary" type="submit" #sendButton>
+    <mat-icon>add</mat-icon>
+  </button>
+</form>
+<ul>
+	<li *ngFor="let food of foods | filter : 'name' : searchFood">
+		<img [src]="food.image" style=" width:100px; height:auto">
+    {{food.name}} {{food.calories}} {{food.quantity}}
+    <button mat-icon-button>
+      <mat-icon>
+        plus
+      </mat-icon>
+    </button>
+	</li>
+</ul>
