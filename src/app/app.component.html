@@ -1,9 +1,10 @@
 
-<header>
+<mat-form-field>
     <mat-label>Search: </mat-label>
-    <input  mat-input [(ngModel)]="searchFood" placeholder="Search your food">
-  <button class='margins' mat-raised-button color="primary" (click)='formVisible()'>{{buttonAdd}}</button>
-</header>
+    <input  matInput [(ngModel)]="searchFood" placeholder="Search your food">
+</mat-form-field>
+<button class='margins' mat-raised-button color="primary" (click)='formVisible()'>{{buttonAdd}}</button>
+
 <form #formulario = 'ngForm' [hidden]='hideAddFood' (ngSubmit) = dataHandle(nombre.value,calories.value)>
   <h3>Add new Food</h3>
   <mat-form-field>
@@ -21,13 +22,34 @@
     <mat-icon>add</mat-icon>
   </button>
 </form>
+
+
+<div class="menu" *ngIf='menuDiario.length>0'>
+  <h2>Menu Diario</h2>
+  <mat-list id='scrollStyle'>
+    <mat-list-item *ngFor='let item of menuDiario'>
+      <p>{{item['name']}}</p>
+      <p>X{{item['quantity']}}
+        <button mat-icon-button (click)='deleteItem(item)'>
+          <mat-icon>
+            delete
+          </mat-icon>
+        </button>
+      </p>
+    </mat-list-item>
+  </mat-list>
+  <h3>Total Calories: {{totalCal}}</h3>
+</div>
+
+
 <ul>
 	<li *ngFor="let food of foods | filter : 'name' : searchFood">
 		<img [src]="food.image" style=" width:100px; height:auto">
-    {{food.name}} {{food.calories}} {{food.quantity}}
-    <button mat-icon-button>
+    <p>{{food.name}}</p>
+    <p>Calories: {{food.calories}}</p>
+    <button mat-icon-button (click)='addtomenu(food)'>
       <mat-icon>
-        plus
+        add
       </mat-icon>
     </button>
 	</li>
